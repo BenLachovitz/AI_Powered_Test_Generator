@@ -25,11 +25,6 @@ def on_leave(event, change):
     event.widget.configure(image=change)
 
 
-# window = Tk()
-# window.geometry("1440x1024")
-# window.configure(bg="#FFFFFF")
-
-
 def show_main_frame(main_frame, show_frame):
     main_canvas = Canvas(
         main_frame,
@@ -83,6 +78,3 @@ def show_main_frame(main_frame, show_frame):
 
     # button_5.bind("<Enter>", lambda e: on_hover(e, button_image_5_hover))
     # button_5.bind("<Leave>", lambda e: on_hover(e, button_image_5))
-
-# window.resizable(False, False)
-# window.mainloop()

@@ -8,6 +8,12 @@ from pathlib import Path
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
+import fontTools.config
+import ttkbootstrap as tb
+from ttkbootstrap.dialogs.dialogs import DatePickerDialog
+from ttkbootstrap import Combobox
+from datetime import date
+
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
     r"C:\Users\benzo\PycharmProjects\TryNewUI\Scripts\frame3")
@@ -16,6 +22,27 @@ ASSETS_PATH = OUTPUT_PATH / Path(
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+
+def get_entries(name, grade, email, gender, dob, password):
+    if not name or not grade or not email or not gender or not dob or not password:
+        print("FALSE")
+    else:
+        print(name, gender, dob)
+
+
+class CustomDateEntry(tb.DateEntry):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.entry["state"] = "readonly"
+        self.entry["font"] = 10
+
+    def _on_date_ask(self):
+        self.entry["state"] = "normal"
+        super()._on_date_ask()
+        self.entry["state"] = "readonly"
+
+
+text_check: str
 
 window = Tk()
 
@@ -33,6 +60,32 @@ canvas = Canvas(
 )
 
 canvas.place(x=0, y=0)
+
+text_box_img = PhotoImage(
+    file=relative_to_assets("entry_1.png"))
+
+genders = ['Male', 'Female']
+
+gender_img = canvas.create_image(
+    1034.5,
+    377.5,
+    image=text_box_img
+)
+
+gender_combobox = Combobox(
+    style="light",
+    state='readonly',
+    values=genders,
+    font=("Inter", 16)
+)
+gender_combobox.current(0)
+gender_combobox.place(
+    x=824.0,
+    y=361.0,
+    width=422.0,
+    height=34.0
+)
+
 image_image_1 = PhotoImage(
     file=relative_to_assets("image_1.png"))
 image_1 = canvas.create_image(
@@ -49,24 +102,20 @@ image_2 = canvas.create_image(
     image=image_image_2
 )
 
-entry_image_1 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_1 = canvas.create_image(
+grade_img = canvas.create_image(
     408.5,
     487.5,
-    image=entry_image_1
+    image=text_box_img
 )
-entry_1 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
+grade_entry = tb.Entry(
+    style="light",
+    font=("Inter", 16)
 )
-entry_1.place(
+grade_entry.place(
     x=198.0,
-    y=468.0,
+    y=471.0,
     width=421.0,
-    height=37.0
+    height=34.0
 )
 
 canvas.create_text(
@@ -132,104 +181,113 @@ canvas.create_text(
     font=("Inter", 24 * -1)
 )
 
-entry_image_2 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_2 = canvas.create_image(
+name_img = canvas.create_image(
     408.5,
     377.5,
-    image=entry_image_2
+    image=text_box_img
 )
-entry_2 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
+name_entry = tb.Entry(
+    style="light",
+    font=("Inter", 16)
 )
-entry_2.place(
+name_entry.place(
     x=198.0,
-    y=358.0,
+    y=361.0,
     width=421.0,
-    height=37.0
+    height=34.0
 )
 
-entry_image_3 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_3 = canvas.create_image(
-    1034.5,
-    377.5,
-    image=entry_image_3
-)
-entry_3 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_3.place(
-    x=824.0,
-    y=358.0,
-    width=421.0,
-    height=37.0
-)
+# gender_combobox = ttk.Combobox(
+#     background="#FFFFFF",
+#     foreground="#000716",
+#     font=("Inter", 16),
+#     state='readonly',
+#     values=genders
+# )
+# gender_combobox.place(
+#     x=824.0,
+#     y=361.0,
+#     width=422.0,
+#     height=34.0
+# )
 
-entry_image_4 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_4 = canvas.create_image(
+# gender_entry = Entry(
+#     bd=0,
+#     bg="#FFFFFF",
+#     fg="#000716",
+#     highlightthickness=0,
+#     font=("Inter", 16)
+# )
+# gender_entry.place(
+#     x=824.0,
+#     y=361.0,
+#     width=421.0,
+#     height=34.0
+# )
+
+email_img = canvas.create_image(
     408.5,
     611.5,
-    image=entry_image_4
+    image=text_box_img
 )
-entry_4 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
+email_entry = tb.Entry(
+    style='light',
+    font=("Inter", 16)
 )
-entry_4.place(
+email_entry.place(
     x=198.0,
-    y=592.0,
+    y=595.0,
     width=421.0,
-    height=37.0
+    height=34.0
 )
 
-entry_image_5 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_5 = canvas.create_image(
-    1034.5,
-    487.5,
-    image=entry_image_5
+# dob_img = canvas.create_image(
+#     1034.5,
+#     487.5,
+#     image=text_box_img
+# )
+
+dob_entry = CustomDateEntry(
+    bootstyle='light',
+    dateformat='%x',
+    relief='flat',
 )
-entry_5 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_5.place(
+dob_entry.place(
     x=824.0,
-    y=468.0,
-    width=421.0,
-    height=37.0
+    y=471.0,
+    width=424.0,
+    height=36.0
 )
 
-entry_image_6 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
-entry_bg_6 = canvas.create_image(
+# dob_entry = Entry(
+#     bd=0,
+#     bg="#FFFFFF",
+#     fg="#000716",
+#     highlightthickness=0,
+#     font=("Inter", 16)
+# )
+# dob_entry.place(
+#     x=824.0,
+#     y=471.0,
+#     width=421.0,
+#     height=34.0
+# )
+
+password_img = canvas.create_image(
     1034.5,
     611.5,
-    image=entry_image_6
+    image=text_box_img
 )
-entry_6 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
+password_entry = tb.Entry(
+    style="light",
+    show='*',
+    font=("Inter", 16)
 )
-entry_6.place(
+password_entry.place(
     x=824.0,
-    y=592.0,
+    y=595.0,
     width=421.0,
-    height=37.0
+    height=34.0
 )
 
 button_image_1 = PhotoImage(
@@ -239,7 +297,14 @@ button_1 = Button(
     borderwidth=0,
     highlightthickness=0,
     activebackground="#96C1C9",
-    command=lambda: print("button_1 clicked"),
+    command=lambda: get_entries(
+        name_entry.get(),
+        grade_entry.get(),
+        email_entry.get(),
+        gender_combobox.get(),
+        dob_entry.entry.get(),
+        password_entry.get()
+    ),
     relief="flat"
 )
 button_1.place(

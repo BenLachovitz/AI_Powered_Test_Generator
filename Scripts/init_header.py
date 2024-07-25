@@ -178,7 +178,6 @@ def init_header_frame(head_frame, show_frame):
     header_canvas.grid(row=0, column=0, sticky=NSEW)
 
 
-
 # button_5.bind("<Button-1>", lambda e: on_click(e))
 
 

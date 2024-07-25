@@ -51,8 +51,6 @@ def show_login_frame(login_frame, show_frame, show_frame_log):
         image=login_canvas.image_image_2
     )
 
-    
-
     login_canvas.entry_image_1 = PhotoImage(
         file=relative_to_assets("entry_1.png"))
     entry_bg_1 = login_canvas.create_image(
