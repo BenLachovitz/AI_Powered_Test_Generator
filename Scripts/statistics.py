@@ -25,9 +25,9 @@ def display_plot():
 
     fig, ax = plt.subplots()  # Create a figure and axis
     ax.hist(data, color='blue')  # Plot the histogram on the axis
-    ax.set_title("Skills", fontdict={"fontname": "intern", "size": 16})
-    ax.set_xlabel('Value')
-    ax.set_ylabel('Frequency')
+    ax.set_title("Skills", fontdict={"fontname": "Comic Sans MS", "size": 16})
+    ax.set_xlabel('Value', fontdict={"fontname": "Comic Sans MS", "size": 12})
+    ax.set_ylabel('Frequency', fontdict={"fontname": "Comic Sans MS", "size": 12})
     fig.patch.set_alpha(0.0)  # Figure background transparency
     ax.patch.set_alpha(0.0)  # Axes background transparency
     fig.savefig('histogram.png')  # Save the figure as a PNG file
@@ -37,9 +37,9 @@ def display_plot():
 
     fig, ax = plt.subplots()  # Create a figure and axis
     ax.hist(data, color='blue')  # Plot the histogram on the axis
-    ax.set_title("Recent tests", fontdict={"fontname": "intern", "size": 16})
-    ax.set_xlabel('Value')
-    ax.set_ylabel('Frequency')
+    ax.set_title("Recent tests", fontdict={"fontname": "Comic Sans MS", "size": 16})
+    ax.set_xlabel('Value', fontdict={"fontname": "Comic Sans MS", "size": 12})
+    ax.set_ylabel('Frequency', fontdict={"fontname": "Comic Sans MS", "size": 12})
     fig.patch.set_alpha(0.0)  # Figure background transparency
     ax.patch.set_alpha(0.0)  # Axes background transparency
     fig.savefig('histogram2.png')  # Save the figure as a PNG file
