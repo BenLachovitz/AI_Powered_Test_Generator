@@ -184,4 +184,4 @@ def init_header_frame(head_frame, show_frame):
 def change(student_name):
     header_frame.nametowidget("login_b").destroy()
     header_frame.nametowidget("sign_b").destroy()
-    header_canvas.itemconfig(welcome_text, text=f"Welcome, {student_name}")
+    header_canvas.itemconfig(welcome_text, text=f"Welcome, {student_name.split(' ', 1)[0]}")

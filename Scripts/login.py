@@ -18,10 +18,10 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-def check_details_validation(email, password, change_frame):
+def check_details_validation(email, password, change_frame, log_canvas, valid_text):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if not email or not password or not re.fullmatch(regex, email):
-        print("not valid")
+        log_canvas.itemconfig(valid_text, text="One or more fields are not valid")
     else:
         change_frame("main", "Ben")
 
@@ -76,6 +76,7 @@ def show_login_frame(login_frame, show_frame, show_frame_log):
         bd=0,
         bg="#FFFFFF",
         fg="#000716",
+        show='*',
         highlightthickness=0,
         font=("Intern", 18)
     )
@@ -116,7 +117,8 @@ def show_login_frame(login_frame, show_frame, show_frame_log):
         borderwidth=0,
         highlightthickness=0,
         activebackground="#86BEC9",
-        command=lambda: check_details_validation(entry_2.get(), entry_1.get(), show_frame_log),
+        command=lambda: check_details_validation(entry_2.get(), entry_1.get(),
+                                                 show_frame_log, login_canvas, validation_text),
         relief="flat"
     )
     button_1.place(
@@ -151,6 +153,15 @@ def show_login_frame(login_frame, show_frame, show_frame_log):
         text="Enter your email",
         fill="#000000",
         font=("Inter", 24 * -1)
+    )
+
+    validation_text = login_canvas.create_text(
+        585.0,
+        620.0,
+        anchor="nw",
+        text="",
+        fill="red",
+        font=("Inter", 20 * -1)
     )
 # window.resizable(False, False)
 # window.mainloop()

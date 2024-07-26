@@ -17,6 +17,9 @@ ASSETS_PATH = OUTPUT_PATH / Path(
     r"C:\Users\benzo\PycharmProjects\TryNewUI\Scripts\frame3")
 
 
+signup_canvas: Canvas
+
+
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
@@ -65,13 +68,13 @@ def pick_date(event, dob):
     submit_btn.pack(pady=10)
 
 
-def get_data_from_entries(name, grade, email, gender, dob, password, change_frame):
-    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+def get_data_from_entries(name, grade, email, gender, dob, password, change_frame, valid_text):
+    global signup_canvas
 
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if not name or not grade or not email or not re.fullmatch(regex, email) or not password or dob == "dd/mm/yyyy":
-        print("Not valid")
+        signup_canvas.itemconfig(valid_text, text="One or more fields are not valid")
     else:
-        print(name, grade, email, gender, dob, password)
         list_det = [name, grade, email, gender, dob, password]
         set_the_login_or_signup_details(list_det)
         change_frame("main", name)
@@ -85,6 +88,7 @@ def get_data_from_entries(name, grade, email, gender, dob, password, change_fram
 
 
 def show_signup_frame(signup_frame, show_frame, show_frame_log):
+    global signup_canvas
 
     signup_canvas = Canvas(
         signup_frame,
@@ -242,7 +246,7 @@ def show_signup_frame(signup_frame, show_frame, show_frame_log):
         signup_frame,
         font=("Intern", 24 * -1),
         style='MyTheme.TCombobox',
-        values=values
+        values=values,
     )
 
     gender_entry.current(0)
@@ -342,7 +346,8 @@ def show_signup_frame(signup_frame, show_frame, show_frame_log):
             gender_entry.get(),
             dob_entry.get(),
             password_entry.get(),
-            show_frame_log
+            show_frame_log,
+            validation_text
         ),
         relief="flat"
     )
@@ -351,6 +356,15 @@ def show_signup_frame(signup_frame, show_frame, show_frame_log):
         y=678.0,
         width=176.0,
         height=52.0
+    )
+
+    validation_text = signup_canvas.create_text(
+        585.0,
+        645.0,
+        anchor="nw",
+        text="",
+        fill="red",
+        font=("Inter", 20 * -1)
     )
 # window.resizable(False, False)
 # window.mainloop()
