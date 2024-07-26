@@ -7,6 +7,7 @@ from init_header import init_header_frame
 from init_header import change
 from my_profile import show_my_profile_frame
 from statistics import show_statistics_frame
+from sign_up import show_signup_frame
 
 
 class App(Tk):
@@ -34,21 +35,25 @@ class App(Tk):
         login_frame = Frame(main_window)
         profile_frame = Frame(main_window)
         stats_frame = Frame(main_window)
+        signup_frame = Frame(main_window)
         main_frame = Frame(main_window)
 
         self.frames["login"] = login_frame
         self.frames["profile"] = profile_frame
         self.frames["stats"] = stats_frame
+        self.frames["signup"] = signup_frame
         self.frames["main"] = main_frame
 
         login_frame.grid(row=0, column=0, sticky=NSEW)
         profile_frame.grid(row=0, column=0, sticky=NSEW)
         stats_frame.grid(row=0, column=0, sticky=NSEW)
+        signup_frame.grid(row=0, column=0, sticky=NSEW)
         main_frame.grid(row=0, column=0, sticky=NSEW)
 
         show_login_frame(login_frame, self.show_frame, self.show_frame_after_sign)
         show_my_profile_frame(profile_frame, self.show_frame)
         show_statistics_frame(stats_frame, self.show_frame)
+        show_signup_frame(signup_frame, self.show_frame, self.show_frame_after_sign)
         show_main_frame(main_frame, self.show_frame)
 
         self.show_frame("main")
@@ -57,9 +62,9 @@ class App(Tk):
         frame = self.frames[frame_name]
         frame.tkraise()
 
-    def show_frame_after_sign(self, frame_name):
+    def show_frame_after_sign(self, frame_name, student_name):
         frame = self.frames[frame_name]
-        change()
+        change(student_name)
         frame.tkraise()
 
 

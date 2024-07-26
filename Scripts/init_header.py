@@ -116,7 +116,7 @@ def init_header_frame(head_frame, show_frame):
         highlightthickness=0,
         bg="#FFFFFF",
         activebackground="#FFFFFF",
-        command=lambda: print("button_5 clicked"),
+        command=lambda: show_frame("signup"),
         relief="flat"
     )
     button_5.place(
@@ -181,7 +181,7 @@ def init_header_frame(head_frame, show_frame):
 # button_5.bind("<Button-1>", lambda e: on_click(e))
 
 
-def change():
+def change(student_name):
     header_frame.nametowidget("login_b").destroy()
     header_frame.nametowidget("sign_b").destroy()
-    header_canvas.itemconfig(welcome_text, text="Welcome, Ben")
+    header_canvas.itemconfig(welcome_text, text=f"Welcome, {student_name}")

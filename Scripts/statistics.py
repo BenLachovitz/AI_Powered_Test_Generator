@@ -25,6 +25,7 @@ def display_plot():
 
     fig, ax = plt.subplots()  # Create a figure and axis
     ax.hist(data, color='blue')  # Plot the histogram on the axis
+    ax.set_title("Skills", fontdict={"fontname": "intern", "size": 16})
     ax.set_xlabel('Value')
     ax.set_ylabel('Frequency')
     fig.patch.set_alpha(0.0)  # Figure background transparency
@@ -36,6 +37,7 @@ def display_plot():
 
     fig, ax = plt.subplots()  # Create a figure and axis
     ax.hist(data, color='blue')  # Plot the histogram on the axis
+    ax.set_title("Recent tests", fontdict={"fontname": "intern", "size": 16})
     ax.set_xlabel('Value')
     ax.set_ylabel('Frequency')
     fig.patch.set_alpha(0.0)  # Figure background transparency
@@ -43,19 +45,23 @@ def display_plot():
     fig.savefig('histogram2.png')  # Save the figure as a PNG file
     plt.close(fig)  # Close the figure to free memory
 
+    graphs_offset = 250
+
     stats_canvas.image_image_2 = PhotoImage(
         file="histogram.png")
     image_2 = stats_canvas.create_image(
         720.0,
-        250,
+        graphs_offset,
         image=stats_canvas.image_image_2
     )
+
+    graphs_offset += stats_canvas.image_image_2.height()-20
 
     stats_canvas.image_image_3 = PhotoImage(
         file="histogram2.png")
     image_3 = stats_canvas.create_image(
         720.0,
-        200 + stats_canvas.image_image_2.height(),
+        graphs_offset,
         image=stats_canvas.image_image_3
     )
 

@@ -13,8 +13,23 @@ ASSETS_PATH = OUTPUT_PATH / Path(
     r"C:\Users\benzo\PycharmProjects\TryNewUI\Scripts\frame2")
 
 
+entry_1: Entry
+entry_2: Entry
+entry_3: Entry
+entry_4: Entry
+entry_5: Entry
+
+
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
+
+
+def insert_details_to_my_profile(name, grade, email, gender, dob):
+    entry_1.insert(0, name)
+    entry_2.insert(0, grade)
+    entry_3.insert(0, email)
+    entry_4.insert(0, gender)
+    entry_5.insert(0, dob)
 
 
 # window = Tk()
@@ -23,6 +38,7 @@ def relative_to_assets(path: str) -> Path:
 # window.configure(bg="#FFFFFF")
 
 def show_my_profile_frame(main_frame, show_frame):
+    global entry_1, entry_2, entry_3, entry_4, entry_5
     profile_canvas = Canvas(
         main_frame,
         bg="#FFFFFF",
@@ -80,7 +96,8 @@ def show_my_profile_frame(main_frame, show_frame):
         bd=0,
         bg="#C9E2EE",
         fg="#000716",
-        highlightthickness=0
+        highlightthickness=0,
+        font=("Intern", 18)
     )
     entry_1.place(
         x=746.0,
@@ -101,7 +118,8 @@ def show_my_profile_frame(main_frame, show_frame):
         bd=0,
         bg="#C9E2EE",
         fg="#000716",
-        highlightthickness=0
+        highlightthickness=0,
+        font=("Intern", 18)
     )
     entry_2.place(
         x=746.0,
@@ -122,7 +140,8 @@ def show_my_profile_frame(main_frame, show_frame):
         bd=0,
         bg="#C9E2EE",
         fg="#000716",
-        highlightthickness=0
+        highlightthickness=0,
+        font=("Intern", 18)
     )
     entry_3.place(
         x=746.0,
@@ -145,7 +164,8 @@ def show_my_profile_frame(main_frame, show_frame):
         bd=0,
         bg="#C9E2EE",
         fg="#000716",
-        highlightthickness=0
+        highlightthickness=0,
+        font=("Intern", 18)
     )
     entry_4.place(
         x=746.0,
@@ -166,7 +186,8 @@ def show_my_profile_frame(main_frame, show_frame):
         bd=0,
         bg="#C9E2EE",
         fg="#000716",
-        highlightthickness=0
+        highlightthickness=0,
+        font=("Intern", 18)
     )
     entry_5.place(
         x=746.0,
@@ -224,7 +245,6 @@ def show_my_profile_frame(main_frame, show_frame):
         file=relative_to_assets("button_1.png"))
     button_1 = Button(
         main_frame,
-
         image=profile_canvas.button_image_1,
         borderwidth=0,
         highlightthickness=0,

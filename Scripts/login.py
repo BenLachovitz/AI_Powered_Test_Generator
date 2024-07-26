@@ -7,6 +7,7 @@ from pathlib import Path
 from tkinter import *
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+import re
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
@@ -15,6 +16,18 @@ ASSETS_PATH = OUTPUT_PATH / Path(
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
+
+
+def check_details_validation(email, password, change_frame):
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    if not email or not password or not re.fullmatch(regex, email):
+        print("not valid")
+    else:
+        change_frame("main", "Ben")
+
+
+# def get_data_from_entries(email, password):
+# send the details to a query to find the student and get his details
 
 
 # window = Tk()
@@ -63,7 +76,8 @@ def show_login_frame(login_frame, show_frame, show_frame_log):
         bd=0,
         bg="#FFFFFF",
         fg="#000716",
-        highlightthickness=0
+        highlightthickness=0,
+        font=("Intern", 18)
     )
     entry_1.place(
         x=519.0,
@@ -84,7 +98,8 @@ def show_login_frame(login_frame, show_frame, show_frame_log):
         bd=0,
         bg="#FFFFFF",
         fg="#000716",
-        highlightthickness=0
+        highlightthickness=0,
+        font=("Intern", 18)
     )
     entry_2.place(
         x=519.0,
@@ -101,7 +116,7 @@ def show_login_frame(login_frame, show_frame, show_frame_log):
         borderwidth=0,
         highlightthickness=0,
         activebackground="#86BEC9",
-        command=lambda: show_frame_log("main"),
+        command=lambda: check_details_validation(entry_2.get(), entry_1.get(), show_frame_log),
         relief="flat"
     )
     button_1.place(
