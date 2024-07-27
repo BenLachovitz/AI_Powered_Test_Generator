@@ -26,10 +26,15 @@ def relative_to_assets(path: str) -> Path:
 
 def insert_details_to_my_profile(name, grade, email, gender, dob):
     entry_1.insert(0, name)
+    entry_1.configure(state='readonly', readonlybackground='#C9E2EE')
     entry_2.insert(0, grade)
+    entry_2.configure(state='readonly', readonlybackground='#C9E2EE')
     entry_3.insert(0, email)
+    entry_3.configure(state='readonly', readonlybackground='#C9E2EE')
     entry_4.insert(0, gender)
+    entry_4.configure(state='readonly', readonlybackground='#C9E2EE')
     entry_5.insert(0, dob)
+    entry_5.configure(state='readonly', readonlybackground='#C9E2EE')
 
 
 # window = Tk()
@@ -159,8 +164,6 @@ def show_my_profile_frame(main_frame, show_frame):
     )
     entry_4 = Entry(
         main_frame,
-        # state=DISABLED,
-        # disabledbackground="#000000",
         bd=0,
         bg="#C9E2EE",
         fg="#000716",

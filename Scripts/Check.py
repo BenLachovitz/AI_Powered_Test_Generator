@@ -15,7 +15,7 @@ class App(Tk):
         super().__init__()
         self.geometry("1440x1024")
         self.configure(bg="#69D3D2")
-        self.resizable(False, True)
+        self.resizable(False, False)
 
         self.container = Frame(self)
         self.container.pack(fill=BOTH, expand=1)
