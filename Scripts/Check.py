@@ -8,6 +8,7 @@ from init_header import change
 from my_profile import show_my_profile_frame
 from statistics import show_statistics_frame
 from sign_up import show_signup_frame
+from take_test import show_test_frame
 
 
 class App(Tk):
@@ -36,24 +37,28 @@ class App(Tk):
         profile_frame = Frame(main_window)
         stats_frame = Frame(main_window)
         signup_frame = Frame(main_window)
+        test_frame = Frame(main_window)
         main_frame = Frame(main_window)
 
         self.frames["login"] = login_frame
         self.frames["profile"] = profile_frame
         self.frames["stats"] = stats_frame
         self.frames["signup"] = signup_frame
+        self.frames["test"] = test_frame
         self.frames["main"] = main_frame
 
         login_frame.grid(row=0, column=0, sticky=NSEW)
         profile_frame.grid(row=0, column=0, sticky=NSEW)
         stats_frame.grid(row=0, column=0, sticky=NSEW)
         signup_frame.grid(row=0, column=0, sticky=NSEW)
+        test_frame.grid(row=0, column=0, sticky=NSEW)
         main_frame.grid(row=0, column=0, sticky=NSEW)
 
         show_login_frame(login_frame, self.show_frame, self.show_frame_after_sign)
         show_my_profile_frame(profile_frame, self.show_frame)
         show_statistics_frame(stats_frame, self.show_frame)
         show_signup_frame(signup_frame, self.show_frame, self.show_frame_after_sign)
+        show_test_frame(test_frame, self.show_frame)
         show_main_frame(main_frame, self.show_frame)
 
         self.show_frame("main")

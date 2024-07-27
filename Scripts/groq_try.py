@@ -2,7 +2,7 @@ from groq import Groq
 from string_check import parse_test_string
 
 # Initialize the client with your API key
-client = Groq(api_key="enter API_KEY")
+client = Groq(api_key="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")
 
 
 def use_llama(msg):
@@ -27,26 +27,19 @@ def use_llama(msg):
     return completion.choices[0].message.content
 
 
-test_maker = ("Build a test at algebra with 6 questions and 4 multi-option answers for 8th grade. "
-              "- At your respond give just the text by the next format: "
-              "Question(number)\n"
-              "the question.\n\n"
-              "the answers (from A to D)")
+def get_questions_and_answers(test_query):
+    # Extract and print the content
+    test_check = use_llama(test_query)
 
-birds_are_real = "Are bird is real?"
+    questions, answers = parse_test_string(test_check)
+    return questions, answers
 
-# Extract and print the content
-test_check = use_llama(test_maker)
-# print(test_check)
-# print("------------------------\nAfter split\n-------------------------")
 
-questions, answers = parse_test_string(test_check)
-
-for i, (q, a) in enumerate(zip(questions, answers)):
-    print(f"{q}\n")
-    for ans in a:
-        print(ans)
-    print()
+# for i, (q, a) in enumerate(zip(questions, answers)):
+#     print(f"{q}\n")
+#     for ans in a:
+#         print(ans)
+#     print()
 
 
 

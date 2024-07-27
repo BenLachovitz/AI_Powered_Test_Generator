@@ -95,7 +95,7 @@ def init_header_frame(head_frame, show_frame):
         highlightthickness=0,
         bg="#FFFFFF",
         activebackground="#FFFFFF",
-        command=lambda: print("button_4 clicked"),
+        command=lambda: show_frame("test"),
         relief="flat"
     )
     button_4.place(
