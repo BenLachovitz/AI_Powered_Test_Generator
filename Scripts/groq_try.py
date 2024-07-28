@@ -1,5 +1,6 @@
 from groq import Groq
 from string_check import parse_test_string
+import os
 
 # Initialize the client with your API key
 client = Groq(api_key="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")
@@ -35,11 +36,21 @@ def get_questions_and_answers(test_query):
     return questions, answers
 
 
+# test_maker = ("Build a test at algebra with 6 questions and 4 multi-option answers for 8th grade. "
+#               "- At your respond give just the test by the next format: "
+#               "Question(number)\n"
+#               "the question.\n\n"
+#               "the answers (from A to D)")
+
+# ans = use_llama(test_maker)
+# print(ans)
+# while True:
+#     # os.system('clear')
+#     query = input('how can i help you?  ')
+#     answer = use_llama(query)
+#     print(answer)
 # for i, (q, a) in enumerate(zip(questions, answers)):
 #     print(f"{q}\n")
 #     for ans in a:
 #         print(ans)
 #     print()
-
-
-
