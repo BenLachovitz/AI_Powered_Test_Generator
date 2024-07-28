@@ -3,7 +3,7 @@ from string_check import parse_test_string
 import os
 
 # Initialize the client with your API key
-client = Groq(api_key="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")
+client = Groq(api_key="Add API")
 
 
 def use_llama(msg):

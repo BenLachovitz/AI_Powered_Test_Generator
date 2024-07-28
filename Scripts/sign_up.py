@@ -14,7 +14,7 @@ from student_example import set_the_login_or_signup_details
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\TryNewUI\Scripts\frame3")
+    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame3")
 
 
 signup_canvas: Canvas

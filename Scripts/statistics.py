@@ -6,7 +6,7 @@ from PIL import Image, ImageTk
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\TryNewUI\Scripts\frame2")
+    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame2")
 
 stats_canvas: Canvas
 my_scrollbar: Scrollbar

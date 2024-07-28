@@ -10,7 +10,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\TryNewUI\Scripts\frame2")
+    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame2")
 
 
 entry_1: Entry

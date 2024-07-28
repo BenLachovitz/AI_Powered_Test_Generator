@@ -5,7 +5,7 @@ from groq_try import get_questions_and_answers, use_llama
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\TryNewUI\Scripts\frame4")
+    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame4")
 
 test_canvas: Canvas
 test_frame: Frame
@@ -34,7 +34,7 @@ def make_a_test(text_to_show, next_button):
 
     # test_canvas.itemconfig(text_to_show, text=questions[0])
     next_button.place(
-        x=905.0,
+        x=620.0,
         y=681.0,
         width=198.0,
         height=51.0
@@ -49,31 +49,39 @@ def show_next(text_to_show, questions, answers, next_button, checking_ans):
         if i == 0:
             option1 = Radiobutton(
                 test_frame,
+                background='#CFE0E2',
+                font=("Inter", 16)
             )
             option2 = Radiobutton(
                 test_frame,
+                background='#BBD3D7',
+                font=("Inter", 16)
             )
             option3 = Radiobutton(
                 test_frame,
+                background='#BBD3D7',
+                font=("Inter", 16)
             )
             option4 = Radiobutton(
                 test_frame,
+                background='#BBD3D7',
+                font=("Inter", 16)
             )
             option1.place(
-                x=720,
-                y=420
+                x=440,
+                y=300
             )
             option2.place(
-                x=720,
-                y=440
+                x=440,
+                y=350
             )
             option3.place(
-                x=720,
-                y=460
+                x=440,
+                y=400
             )
             option4.place(
-                x=720,
-                y=480
+                x=440,
+                y=450
             )
             options = [option1, option2, option3, option4]
         else:
@@ -93,7 +101,7 @@ def show_next(text_to_show, questions, answers, next_button, checking_ans):
         else:
             test_canvas.itemconfig(text_to_show, text="END of test")
             next_button.place_forget()
-            printing_results(questions, checking_ans, text_to_show)
+            printing_results(checking_ans, text_to_show)
             i = 0
             for the_option in options:
                 the_option.place_forget()
@@ -107,10 +115,10 @@ def show_next(text_to_show, questions, answers, next_button, checking_ans):
         print("choose an option")
 
 
-def printing_results(questions, selected_answers, text_to_show):
+def printing_results(selected_answers, text_to_show):
     results_overlook = ""
-    for j, (q, a) in enumerate(zip(questions, selected_answers)):
-        results_overlook += f"{q}: {a}\n\n"
+    for j, a in enumerate(selected_answers):
+        results_overlook += f"Question {j+1}: {a}\n\n"
     test_canvas.itemconfig(text_to_show, text=results_overlook)
 
 
@@ -139,17 +147,17 @@ def show_test_frame(make_test_frame, show_frame):
         image=test_canvas.image_image_1
     )
 
-    test_canvas.image_image_1 = PhotoImage(
+    test_canvas.image_image_2 = PhotoImage(
         file=relative_to_assets("image_2.png"))
-    image_1 = test_canvas.create_image(
+    image_2 = test_canvas.create_image(
         720.0,
         442.0,
-        image=test_canvas.image_image_1
+        image=test_canvas.image_image_2
     )
 
     test_text = test_canvas.create_text(
-        720.0,
-        400.0,
+        440.0,
+        140.0,
         anchor="nw",
         text="",
         fill="#000000",
@@ -167,10 +175,11 @@ def show_test_frame(make_test_frame, show_frame):
         relief="flat"
     )
 
-    test_canvas.button_image_1 = PhotoImage(
+    test_canvas.button_image_2 = PhotoImage(
         file=relative_to_assets("start_test.png"))
     start_test_button = Button(
         test_frame,
+        image=test_canvas.button_image_2,
         text="START",
         borderwidth=0,
         highlightthickness=0,
@@ -179,7 +188,7 @@ def show_test_frame(make_test_frame, show_frame):
         command=lambda: (make_a_test(test_text, next_button), start_test_button.place_forget())
     )
     start_test_button.place(
-        x=720.0,
+        x=620.0,
         y=681.0,
         width=198.0,
         height=51.0
