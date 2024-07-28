@@ -1,5 +1,6 @@
 from tkinter import *
 from pathlib import Path
+
 import numpy as np
 from groq_try import get_questions_and_answers, use_llama
 
@@ -49,44 +50,52 @@ def show_next(text_to_show, questions, answers, next_button, checking_ans):
         if i == 0:
             option1 = Radiobutton(
                 test_frame,
-                background='#CFE0E2',
-                font=("Inter", 16)
+                background='#b2cdd1',
+                activebackground='#bad3d6',
+                activeforeground='black',
+                font=("Inter", 16, "bold")
             )
             option2 = Radiobutton(
                 test_frame,
-                background='#BBD3D7',
-                font=("Inter", 16)
+                background='#a9c7cc',
+                activebackground='#bad3d6',
+                activeforeground='black',
+                font=("Inter", 16, "bold")
             )
             option3 = Radiobutton(
                 test_frame,
-                background='#BBD3D7',
-                font=("Inter", 16)
+                background='#9fc1c6',
+                activebackground='#bad3d6',
+                activeforeground='black',
+                font=("Inter", 16, "bold")
             )
             option4 = Radiobutton(
                 test_frame,
-                background='#BBD3D7',
-                font=("Inter", 16)
+                background='#97bcc1',
+                activebackground='#bad3d6',
+                activeforeground='black',
+                font=("Inter", 16, "bold")
             )
             option1.place(
                 x=440,
-                y=300
+                y=400
             )
             option2.place(
                 x=440,
-                y=350
+                y=450
             )
             option3.place(
                 x=440,
-                y=400
+                y=500
             )
             option4.place(
                 x=440,
-                y=450
+                y=550
             )
             options = [option1, option2, option3, option4]
         else:
             # print(test_frame.chose.get())
-            answer_check_prompt = (f"Please check the student answer on the next question:\n{questions[i-1]}"
+            answer_check_prompt = (f"Please check the student answer on the next question:\n{questions[i - 1]}"
                                    f"\n\nThe student answer is:\n{test_frame.chose.get()}. "
                                    f"- at your respond provide only "
                                    f"if it's correct or incorrect")
@@ -118,7 +127,7 @@ def show_next(text_to_show, questions, answers, next_button, checking_ans):
 def printing_results(selected_answers, text_to_show):
     results_overlook = ""
     for j, a in enumerate(selected_answers):
-        results_overlook += f"Question {j+1}: {a}\n\n"
+        results_overlook += f"Question {j + 1}: {a}\n\n"
     test_canvas.itemconfig(text_to_show, text=results_overlook)
 
 
@@ -157,11 +166,12 @@ def show_test_frame(make_test_frame, show_frame):
 
     test_text = test_canvas.create_text(
         440.0,
-        140.0,
+        180.0,
+        width=560,
         anchor="nw",
-        text="",
+        text="Welcome to automatic test generator and checking using Llama3.1, which is an AI from Meta.",
         fill="#000000",
-        font=("Inter", 24 * -1)
+        font=("Inter", 26 * -1, "bold")
     )
 
     test_canvas.button_image_1 = PhotoImage(
