@@ -24,9 +24,6 @@ class App(Tk):
         self.frames = {}
         self.create_frames()
 
-        """
-        Dima Was here
-        """
 
     def create_frames(self):
         header_frame = Frame(self.container, height=138)
