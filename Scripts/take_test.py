@@ -18,7 +18,7 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-def make_a_test(text_to_show, next_button):
+def make_a_test(text_to_show, next_button, restart_button):
     global test_frame
     test_maker = ("Build a test at algebra with 6 questions and 4 multi-option answers for 8th grade. "
                   "- At your respond give just the test by the next format: "
@@ -33,18 +33,17 @@ def make_a_test(text_to_show, next_button):
             print(ans)
         print()
 
-    # test_canvas.itemconfig(text_to_show, text=questions[0])
     next_button.place(
         x=620.0,
         y=681.0,
         width=198.0,
         height=51.0
     )
-    next_button.configure(command=lambda: show_next(text_to_show, questions, answers, next_button, checking_ans))
-    show_next(text_to_show, questions, answers, next_button, checking_ans)
+    next_button.configure(command=lambda: show_next(text_to_show, questions, answers, next_button, restart_button, checking_ans))
+    show_next(text_to_show, questions, answers, next_button, restart_button, checking_ans)
 
 
-def show_next(text_to_show, questions, answers, next_button, checking_ans):
+def show_next(text_to_show, questions, answers, next_button, restart_button, checking_ans):
     global i, options
     if i == 0 or (i > 0 and test_frame.chose.get() != 'x'):
         if i == 0:
@@ -94,7 +93,6 @@ def show_next(text_to_show, questions, answers, next_button, checking_ans):
             )
             options = [option1, option2, option3, option4]
         else:
-            # print(test_frame.chose.get())
             answer_check_prompt = (f"Please check the student answer on the next question:\n{questions[i - 1]}"
                                    f"\n\nThe student answer is:\n{test_frame.chose.get()}. "
                                    f"- at your respond provide only "
@@ -110,16 +108,16 @@ def show_next(text_to_show, questions, answers, next_button, checking_ans):
         else:
             test_canvas.itemconfig(text_to_show, text="END of test")
             next_button.place_forget()
+            restart_button.place(
+                x=620.0,
+                y=681.0,
+                width=198.0,
+                height=51.0
+            )
             printing_results(checking_ans, text_to_show)
             i = 0
             for the_option in options:
                 the_option.place_forget()
-            # next_button.place(
-            #     x=905.0,
-            #     y=681.0,
-            #     width=198.0,
-            #     height=51.0
-            # )
     else:
         print("choose an option")
 
@@ -185,6 +183,19 @@ def show_test_frame(make_test_frame, show_frame):
         relief="flat"
     )
 
+    test_canvas.button_image_3 = PhotoImage(
+        file=relative_to_assets("restart_button.png"))
+    restart_button = Button(
+        test_frame,
+        image=test_canvas.button_image_3,
+        borderwidth=0,
+        highlightthickness=0,
+        activebackground="#7DABB2",
+        relief="flat",
+        command=lambda: show_test_frame(test_frame, show_frame=NONE)
+    )
+    restart_button.place_forget()
+
     test_canvas.button_image_2 = PhotoImage(
         file=relative_to_assets("start_test.png"))
     start_test_button = Button(
@@ -195,7 +206,7 @@ def show_test_frame(make_test_frame, show_frame):
         highlightthickness=0,
         activebackground="#7DABB2",
         relief="flat",
-        command=lambda: (make_a_test(test_text, next_button), start_test_button.place_forget())
+        command=lambda: (make_a_test(test_text, next_button, restart_button), start_test_button.place_forget())
     )
     start_test_button.place(
         x=620.0,
