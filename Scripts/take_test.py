@@ -6,7 +6,7 @@ from groq_try import get_questions_and_answers, use_llama
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame4")
+    r"frame4")
 
 test_canvas: Canvas
 test_frame: Frame

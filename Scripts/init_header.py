@@ -11,7 +11,7 @@ from statistics import display_plot
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame1")
+    r"frame1")
 
 header_frame: Frame
 header_canvas: Canvas

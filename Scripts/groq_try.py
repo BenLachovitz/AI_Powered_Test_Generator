@@ -1,9 +1,11 @@
 from groq import Groq
+from dotenv import load_dotenv
 from string_check import parse_test_string
 import os
 
 # Initialize the client with your API key
-client = Groq(api_key="ADD API KEY HERE")
+load_dotenv()
+client = Groq(api_key=os.getenv("API_KEY"))
 
 
 def use_llama(msg):

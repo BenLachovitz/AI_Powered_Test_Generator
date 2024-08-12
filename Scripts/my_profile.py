@@ -10,7 +10,7 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame2")
+    r"frame2")
 
 
 entry_1: Entry
@@ -212,7 +212,7 @@ def show_my_profile_frame(main_frame, show_frame):
         961.0,
         256.0,
         anchor="nw",
-        text="Grade",
+        text="DOB",
         fill="#000000",
         font=("Inter", 24 * -1)
     )
@@ -221,7 +221,7 @@ def show_my_profile_frame(main_frame, show_frame):
         965.0,
         355.0,
         anchor="nw",
-        text="Email",
+        text="Gender",
         fill="#000000",
         font=("Inter", 24 * -1)
     )
@@ -230,7 +230,7 @@ def show_my_profile_frame(main_frame, show_frame):
         970.0,
         454.0,
         anchor="nw",
-        text="DOB\n",
+        text="Email\n",
         fill="#000000",
         font=("Inter", 24 * -1)
     )
@@ -239,7 +239,7 @@ def show_my_profile_frame(main_frame, show_frame):
         961.0,
         553.0,
         anchor="nw",
-        text="Gender\n",
+        text="Grade\n",
         fill="#000000",
         font=("Inter", 24 * -1)
     )

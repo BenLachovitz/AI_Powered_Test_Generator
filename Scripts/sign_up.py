@@ -11,11 +11,16 @@ from tkinter import *
 from tkcalendar import Calendar
 import re
 from student_example import set_the_login_or_signup_details
+import MySQLdb
+import os
+from dotenv import load_dotenv
+from constants import Constants
+import random
 
+load_dotenv()
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
-    r"C:\Users\benzo\PycharmProjects\NewUIExtended\Scripts\frame3")
-
+    r"frame3")
 
 signup_canvas: Canvas
 
@@ -51,7 +56,7 @@ def pick_date(event, dob):
     cal = Calendar(
         date_window,
         selectmode="day", date_pattern="dd/mm/y",
-        background="#86BEC9",  bordercolor="#86BEC9",
+        background="#86BEC9", bordercolor="#86BEC9",
         headersbackground="#86BEC9", foreground='white',
         normalforeground='black', headersforeground='white'
     )
@@ -71,13 +76,60 @@ def pick_date(event, dob):
 def get_data_from_entries(name, grade, email, gender, dob, password, change_frame, valid_text):
     global signup_canvas
 
+    connection = MySQLdb.connect(
+        host=os.getenv("HOST"),
+        user=os.getenv("USER"),
+        passwd=os.getenv("PASSWD"),
+        db=os.getenv("DB")
+    )
+    cursor = connection.cursor()
+    cursor.execute("""SELECT studentID FROM sgdb.studentlogin Order by studentID desc LIMIT 1;""")
+    nextID = cursor.fetchall()[0][0]
+    nextID += 1
+
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if not name or not grade or not email or not re.fullmatch(regex, email) or not password or dob == "dd/mm/yyyy":
         signup_canvas.itemconfig(valid_text, text="One or more fields are not valid")
     else:
         list_det = [name, grade, email, gender, dob, password]
+        genD = 0 if gender == "Male" else 1
+        nameArray = name.split(" ")
+        firstName = nameArray[0]
+        lastName = nameArray[1]
+        studyTime = random.uniform(0, 18)
+        cursor.execute("""INSERT INTO
+        sgdb.studentlogin (`studentID`, `FirstName`, `LastName`, `Email`, `Password`, `Birthday`, `Grade`)
+        VALUES (%s, %s, %s, %s, %s, %s, %s);""", (nextID, firstName, lastName, email, password, dob, grade))
+        connection.commit()
+
+        cursor.execute("""INSERT INTO
+        sgdb.studentinfo (`studentID`, `Gender`, `StudyTimeWeekly`, `Absences`, `Tutoring`, `ParentalSupport`)
+        VALUES (%s, %s, %s, %s, %s, %s);""", (nextID, genD, studyTime, 0, 0, 2))
+        connection.commit()
+
+        cursor.execute(""" INSERT INTO
+        sgdb.studentskills (`studentID`, `GraphingEquationsFunctions`, `SolvingEquations`,
+                        `UnderstandingApplyingProperties`, `UsingAlgebraicTechniques`, `AnalyzingInterpretingData`,
+                        `ApplyingTheoremsFormulas`, `UnderstandingConcepts`, `SolvingRWProblems`,
+                        `UsingCalculatorsSoftware`, `ProvingTheoremsConcepts`)
+        VALUES(%s, '55', '55', '55', '55', '55', '55', '55', '55', '55', '55');""", (nextID,))
+        connection.commit()
+
+        cursor.execute("""INSERT INTO
+        sgdb.studentmarks (`studentID`, `AlgebraLinearEquations`, `AlgebraQuadraticEquations`, `AlgebraPolynomials`,
+                       `AlgebraExponentsAndLogarithms`, `GeometryCoordinateGeometry`, `GeometryTrigonometry`,
+                       `GeometryCircles`, `GeometryVectors`, `CalculusLimitsAndContinuity`, `CalculusDifferentiation`,
+                       `CalculusIntegration`, `CalculusApplicationsCalculus`, `StatisticsDescriptiveStatistics`,
+                       `StatisticsInferentialStatistics`, `StatisticsProbabilityTheorems`, `StatisticsDistributions`)
+        VALUES(%s, '55', '55', '55', '55', '55', '55', '55', '55', '55', '55', '55', '55', '55', '55', '55', '55');""",
+                       (nextID,))
+        connection.commit()
+
         set_the_login_or_signup_details(list_det)
         change_frame("main", name)
+
+    connection.close()
+
 
 # global selected_date
 

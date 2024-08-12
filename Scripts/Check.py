@@ -10,7 +10,6 @@ from statistics import show_statistics_frame
 from sign_up import show_signup_frame
 from take_test import show_test_frame
 
-
 class App(Tk):
     def __init__(self):
         super().__init__()
@@ -23,7 +22,6 @@ class App(Tk):
 
         self.frames = {}
         self.create_frames()
-
 
     def create_frames(self):
         header_frame = Frame(self.container, height=138)
