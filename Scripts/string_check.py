@@ -45,6 +45,27 @@ def parse_test_string(test_string):
     return questions, answers
 
 
+def parse_evaluation_string(evaluation_string):
+    skills = []
+    subjects = []
+    parts = evaluation_string.split('\n')
+    for part in parts:
+        if part.startswith(("Here","***")):
+            continue
+        if not part:
+            continue
+
+        if part.startswith(("Algebra", "Geometry", "Calculus", "Statistics")):
+            subjects_pairs = part.strip()
+            subject_name, subject_grade = subjects_pairs.strip().split(':')
+            subjects.append([subject_name.strip(), int(subject_grade.strip())])
+        else:
+            skills_pairs = part.strip()
+            skill_name, skill_grade = skills_pairs.strip().split(':')
+            skills.append([skill_name.strip(), int(skill_grade.strip())])
+
+    return skills, subjects
+
 # test_string = """Question 1
 # the question number 1
 #

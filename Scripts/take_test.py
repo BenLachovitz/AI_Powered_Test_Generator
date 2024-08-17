@@ -1,9 +1,16 @@
+import random
 from tkinter import *
 from pathlib import Path
+from string_check import parse_evaluation_string
 
 import numpy as np
 from groq_try import get_questions_and_answers, use_llama
+from constants import Constants
+import MySQLdb
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(
     r"frame4")
@@ -12,16 +19,110 @@ test_canvas: Canvas
 test_frame: Frame
 options: []
 i = 0
+rnd = 0
 
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
+def performance_evaluation(questions, checking_ans):
+    global skillTable
+    global subjectSubTable
+
+    connection = MySQLdb.connect(
+        host=os.getenv("HOST"),
+        user=os.getenv("USER"),
+        passwd=os.getenv("PASSWD"),
+        db=os.getenv("DB")
+    )
+
+    cursor = connection.cursor()
+
+    cursor.execute("""SELECT * 
+    FROM sgdb.studentskills 
+    where studentID = %s;""", (Constants.studentID,))
+
+    fetchedAll = cursor.fetchall()
+
+    if fetchedAll:
+        field_names = [i[0] for i in cursor.description][1:]
+        values = [i for i in fetchedAll[0]][1:]
+        skillTable = [[i, j] for i, j in zip(field_names, values)]
+    else:
+        skillTable = []
+
+    cursor.execute(
+        "SET @sql = NULL; "
+        "SELECT GROUP_CONCAT(column_name) INTO @sql "
+        "FROM information_schema.columns "
+        "WHERE table_name = 'studentmarks' "
+        "AND table_schema = 'sgdb' "
+        f"AND column_name LIKE '{Constants.subjects[Constants.randomIndex]}%';"
+    )
+    cursor.execute(
+        f"SET @sql = CONCAT('SELECT ', @sql, ' FROM sgdb.studentmarks WHERE studentID = {Constants.studentID}');"
+        "PREPARE stmt FROM @sql;"
+    )
+    cursor.execute("EXECUTE stmt;")
+    fetchedAll = cursor.fetchall()
+
+
+    if fetchedAll:
+        field_names = [i[0] for i in cursor.description]
+        values = [i for i in fetchedAll[0]]
+        subjectSubTable = [[i, j] for i, j in zip(field_names, values)]
+    else:
+        skillTable = []
+
+    cursor.execute("DEALLOCATE PREPARE stmt;")
+
+    evaluate_skills_prompt = (
+        f"Given the questions that i give you the results of the student , his set of skills and his set of grades in each subject,"
+        f"Please evaluate and update the relevant skills and subjects."
+        f"if the new grade is lower than we original please do not change it. change only if the grade is improving"
+        f"The skills: {skillTable} "
+        f"The subjects: {subjectSubTable} "
+        f"The questions:\n{questions}"
+        f"The results:\n{checking_ans}"
+        f"- At your response give only the set of skills by the next format:"
+        f"SKILL_NAME: SKILL_GRADE or SUBJECT_NAME:SUBJECT_GRADE"
+        f"please start each set with '***'"
+        f"without any notes or starting or ending, just the skills set and the subject set")
+
+    evaluate_skills_answer_string = use_llama(evaluate_skills_prompt)
+    skills, subjects = parse_evaluation_string(evaluate_skills_answer_string)
+
+    cursor.execute("UPDATE sgdb.studentskills SET "
+                   f"{skills[0][0]} = {skills[0][1]}, "
+                   f"{skills[1][0]} = {skills[1][1]}, "
+                   f"{skills[2][0]} = {skills[2][1]}, "
+                   f"{skills[3][0]} = {skills[3][1]}, "
+                   f"{skills[4][0]} = {skills[4][1]}, "
+                   f"{skills[5][0]} = {skills[5][1]}, "
+                   f"{skills[6][0]} = {skills[6][1]}, "
+                   f"{skills[7][0]} = {skills[7][1]}, "
+                   f"{skills[8][0]} = {skills[8][1]}, "
+                   f"{skills[9][0]} = {skills[9][1]} "
+                   f"WHERE (`studentID` = {Constants.studentID});")
+    connection.commit()
+
+    cursor.execute("UPDATE sgdb.studentmarks SET "
+                   f"{subjects[0][0]} = {subjects[0][1]}, "
+                   f"{subjects[1][0]} = {subjects[1][1]}, "
+                   f"{subjects[2][0]} = {subjects[2][1]}, "
+                   f"{subjects[3][0]} = {subjects[3][1]} "
+                   f"WHERE (`studentID` = {Constants.studentID});")
+    connection.commit()
+
+
 def make_a_test(text_to_show, next_button, restart_button):
     global test_frame
-    test_maker = ("Build a test at algebra with 6 questions and 4 multi-option answers for 8th grade. "
-                  "- At your respond give just the test by the next format: "
+    Constants.randomIndex = random.randint(0, 3)
+    test_maker = ("Build a test in the following subjects "
+                  f"{Constants.subjects[Constants.randomIndex]}. "
+                  "The test is made of 6 questions and 4 multi-option answers for the 11th grade. "
+                  "- In your response provide just the test in the next format: "
                   "Question(number)\n - without marks like '**' just the question and the number"
                   "the question.\n\n"
                   "the answers (from A to D)")
@@ -115,6 +216,9 @@ def show_next(text_to_show, questions, answers, next_button, restart_button, che
                 height=51.0
             )
             printing_results(checking_ans, text_to_show)
+            if Constants.studentID > 0:
+                performance_evaluation(questions, checking_ans)
+
             i = 0
             for the_option in options:
                 the_option.place_forget()
