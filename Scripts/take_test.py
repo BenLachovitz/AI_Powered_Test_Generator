@@ -216,12 +216,12 @@ def show_next(text_to_show, questions, answers, next_button, restart_button, che
                 height=51.0
             )
             printing_results(checking_ans, text_to_show)
-            if Constants.studentID > 0:
-                performance_evaluation(questions, checking_ans)
-
             i = 0
             for the_option in options:
                 the_option.place_forget()
+
+            if Constants.studentID > 0:
+                performance_evaluation(questions, checking_ans)
     else:
         print("choose an option")
 
