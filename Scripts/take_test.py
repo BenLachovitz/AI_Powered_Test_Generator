@@ -118,9 +118,34 @@ def performance_evaluation(questions, checking_ans):
 
 def make_a_test(text_to_show, next_button, restart_button):
     global test_frame
+    global skillTable
+
+    connection = MySQLdb.connect(
+        host=os.getenv("HOST"),
+        user=os.getenv("USER"),
+        passwd=os.getenv("PASSWD"),
+        db=os.getenv("DB")
+    )
+
+    cursor = connection.cursor()
+
+    cursor.execute("""SELECT * 
+        FROM sgdb.studentskills 
+        where studentID = %s;""", (Constants.studentID,))
+
+    fetchedAll = cursor.fetchall()
+
+    if fetchedAll:
+        field_names = [i[0] for i in cursor.description][1:]
+        values = [i for i in fetchedAll[0]][1:]
+        skillTable = [[i, j] for i, j in zip(field_names, values)]
+    else:
+        skillTable = []
+
     Constants.randomIndex = random.randint(0, 3)
-    test_maker = ("Build a test in the following subjects "
-                  f"{Constants.subjects[Constants.randomIndex]}. "
+    test_maker = ("Build a test in the following subject "
+                  f"{Constants.subjects[Constants.randomIndex]} "
+                  f"that has the following learning skills: {skillTable}."
                   "The test is made of 6 questions and 4 multi-option answers for the 11th grade. "
                   "- In your response provide just the test in the next format: "
                   "Question(number)\n - without marks like '**' just the question and the number"
