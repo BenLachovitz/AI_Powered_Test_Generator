@@ -67,7 +67,6 @@ def performance_evaluation(questions, checking_ans):
     cursor.execute("EXECUTE stmt;")
     fetchedAll = cursor.fetchall()
 
-
     if fetchedAll:
         field_names = [i[0] for i in cursor.description]
         values = [i for i in fetchedAll[0]]
@@ -79,8 +78,8 @@ def performance_evaluation(questions, checking_ans):
 
     evaluate_skills_prompt = (
         f"Given the questions that i give you the results of the student , his set of skills and his set of grades in each subject,"
-        f"Please evaluate and update the relevant skills and subjects."
-        f"if the new grade is lower than we original please do not change it. change only if the grade is improving"
+        f"Please evaluate and update the relevant skills and subjects. "
+        #f"if the new grade is lower than we original please do not change it. change only if the grade is improving"
         f"The skills: {skillTable} "
         f"The subjects: {subjectSubTable} "
         f"The questions:\n{questions}"
@@ -165,7 +164,8 @@ def make_a_test(text_to_show, next_button, restart_button):
         width=198.0,
         height=51.0
     )
-    next_button.configure(command=lambda: show_next(text_to_show, questions, answers, next_button, restart_button, checking_ans))
+    next_button.configure(
+        command=lambda: show_next(text_to_show, questions, answers, next_button, restart_button, checking_ans))
     show_next(text_to_show, questions, answers, next_button, restart_button, checking_ans)
 
 
