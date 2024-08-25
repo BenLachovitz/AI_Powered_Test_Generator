@@ -125,6 +125,7 @@ def get_data_from_entries(name, grade, email, gender, dob, password, change_fram
                        (nextID,))
         connection.commit()
 
+        Constants.studentID = nextID
         set_the_login_or_signup_details(list_det)
         change_frame("main", name)
 
