@@ -71,6 +71,3 @@ The system leverages machine learning and AI capabilities through Groq API with 
 6.  **Skill Metrics Update:** Llama provides new skill metrics based on the kid's test performance, which the system saves back to the database.
     
 7.  **Report and Feedback:** The system updates the kid's progress dashboard and may generate tailored reports with recommendations for further study.
-    
-
-This structured workflow ensures an engaging and educational experience, allowing kids to track their learning progress and improve their skills efficiently.
